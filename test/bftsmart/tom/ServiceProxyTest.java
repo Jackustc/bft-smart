@@ -38,7 +38,12 @@ public class ServiceProxyTest {
 	public static void setup(){
 		proxy = new ServiceProxy(1001);
 	}
-	
+
+	private int opId = 1;
+	private int opId() {
+		return opId++;
+	}
+
 	@Test
 	public void testReplyReceived() {
 		// Just to setup some variables
@@ -75,11 +80,11 @@ public class ServiceProxyTest {
 				requestType.set(proxy, TOMMessageType.ORDERED_REQUEST);
 				response.set(proxy, null);
 
-				TOMMessage msg = new TOMMessage(0, 1, 1, "response1".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
+				TOMMessage msg = new TOMMessage(0, 1, 1, opId(), "response1".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
 				proxy.replyReceived(msg);
-				msg = new TOMMessage(1, 1, 1, "response1".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
+				msg = new TOMMessage(1, 1, 1, opId(), "response1".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
 				proxy.replyReceived(msg);
-				msg = new TOMMessage(2, 1, 1, "response1".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
+				msg = new TOMMessage(2, 1, 1, opId(), "response1".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
 				proxy.replyReceived(msg);
 				TOMMessage reply = (TOMMessage)response.get(proxy);
 				
@@ -96,13 +101,13 @@ public class ServiceProxyTest {
 				requestType.set(proxy, TOMMessageType.ORDERED_REQUEST);
 				response.set(proxy, null);
 
-				msg = new TOMMessage(0, 1, 1, "response1".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
+				msg = new TOMMessage(0, 1, 1, opId(), "response1".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
 				proxy.replyReceived(msg);
-				msg = new TOMMessage(1, 1, 1, "response1".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
+				msg = new TOMMessage(1, 1, 1, opId(), "response1".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
 				proxy.replyReceived(msg);
-				msg = new TOMMessage(2, 1, 1, "response2".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
+				msg = new TOMMessage(2, 1, 1, opId(), "response2".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
 				proxy.replyReceived(msg);
-				msg = new TOMMessage(3, 1, 1, "response1".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
+				msg = new TOMMessage(3, 1, 1, opId(), "response1".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
 				proxy.replyReceived(msg);
 				reply = (TOMMessage)response.get(proxy);
 				
@@ -118,13 +123,13 @@ public class ServiceProxyTest {
 				requestType.set(proxy, TOMMessageType.ORDERED_REQUEST);
 				response.set(proxy, null);
 
-				msg = new TOMMessage(0, 1, 1, "response1".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
+				msg = new TOMMessage(0, 1, 1, opId(), "response1".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
 				proxy.replyReceived(msg);
-				msg = new TOMMessage(1, 1, 1, "response1".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
+				msg = new TOMMessage(1, 1, 1, opId(), "response1".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
 				proxy.replyReceived(msg);
-				msg = new TOMMessage(2, 1, 1, "response2".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
+				msg = new TOMMessage(2, 1, 1, opId(), "response2".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
 				proxy.replyReceived(msg);
-				msg = new TOMMessage(3, 1, 1, "response2".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
+				msg = new TOMMessage(3, 1, 1, opId(), "response2".getBytes(), 0, TOMMessageType.ORDERED_REQUEST);
 				proxy.replyReceived(msg);
 				reply = (TOMMessage)response.get(proxy);
 				
@@ -139,11 +144,11 @@ public class ServiceProxyTest {
 				requestType.set(proxy, TOMMessageType.UNORDERED_REQUEST);
 				response.set(proxy, null);
 
-				msg = new TOMMessage(0, 1, 1, "response1".getBytes(), 0, TOMMessageType.UNORDERED_REQUEST);
+				msg = new TOMMessage(0, 1, 1, opId(), "response1".getBytes(), 0, TOMMessageType.UNORDERED_REQUEST);
 				proxy.replyReceived(msg);
-				msg = new TOMMessage(1, 1, 1, "response1".getBytes(), 0, TOMMessageType.UNORDERED_REQUEST);
+				msg = new TOMMessage(1, 1, 1, opId(), "response1".getBytes(), 0, TOMMessageType.UNORDERED_REQUEST);
 				proxy.replyReceived(msg);
-				msg = new TOMMessage(2, 1, 1, "response1".getBytes(), 0, TOMMessageType.UNORDERED_REQUEST);
+				msg = new TOMMessage(2, 1, 1, opId(), "response1".getBytes(), 0, TOMMessageType.UNORDERED_REQUEST);
 				proxy.replyReceived(msg);
 				
 				reply = (TOMMessage)response.get(proxy);
@@ -156,9 +161,9 @@ public class ServiceProxyTest {
 				requestType.set(proxy, TOMMessageType.UNORDERED_REQUEST);
 				response.set(proxy, null);
 
-				msg = new TOMMessage(0, 1, 1, "response1".getBytes(), 0, TOMMessageType.UNORDERED_REQUEST);
+				msg = new TOMMessage(0, 1, 1, opId(), "response1".getBytes(), 0, TOMMessageType.UNORDERED_REQUEST);
 				proxy.replyReceived(msg);
-				msg = new TOMMessage(1, 1, 1, "response2".getBytes(), 0, TOMMessageType.UNORDERED_REQUEST);
+				msg = new TOMMessage(1, 1, 1, opId(), "response2".getBytes(), 0, TOMMessageType.UNORDERED_REQUEST);
 				proxy.replyReceived(msg);
 				
 				reply = (TOMMessage)response.get(proxy);
@@ -168,10 +173,7 @@ public class ServiceProxyTest {
 				
 				e.printStackTrace();
 			}
-		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
+		} catch (NoSuchFieldException | SecurityException e) {
 			e.printStackTrace();
 		}
 	}
